@@ -22,6 +22,6 @@ The game of Minesweeper is an instance of state machines. All the states can be 
 
 The rest information can be derived from the view such as the status of a pass or a fail.
 
-To implement a state machine, one can choose OOP to model the state and the actions. However, this approach might be error-prone because it has to handle a set of variables across different actions.
+To implement a state machine, one can choose OOP to model the state and the actions. However, this approach might be error-prone because it has to handle a set of variables across different actions and conditions.
 
 This project chooses functional reactive programming (FRP) to model the state and actions. As mentioned above, all the states in the game can be derived from the history of the user's inputs (visits). The grid of minefields can be made after the first visit is observed. The grid of numbers of adjacent mines can be derived from the grid of minefields. The final view can be composed with the above grid and the grid of visits.
