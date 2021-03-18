@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { useObservable } from 'rxjs-hooks'
 import styled from '@emotion/styled'
 
@@ -39,6 +39,21 @@ export default function Home() {
   const minesweeper = useMemo(() => new Minesweeper(size, size, nMines), [])
   const view = useObservable(() => minesweeper.view)
 
+  const handleVisit = useCallback(
+    (e) => {
+      if (!(view.passed || view.failed)) {
+        const index = e.target.dataset.index
+
+        if (e.target.dataset.index !== null) {
+          const col = Math.floor(index / size)
+          const row = index % size
+          minesweeper.visit(col, row)
+        }
+      }
+    },
+    [view]
+  )
+
   if (view) {
     const cells = Array.from(
       view.playground.flatMap((col) => col.values()).values()
@@ -68,17 +83,7 @@ export default function Home() {
         <Status>{status}</Status>
         <Playground
           style={{ gridTemplateColumns: `repeat(${size}, 40px)` }}
-          onClick={(e) => {
-            if (!(view.passed || view.failed)) {
-              const index = e.target.dataset.index
-
-              if (e.target.dataset.index !== null) {
-                const col = Math.floor(index / size)
-                const row = index % size
-                minesweeper.visit(col, row)
-              }
-            }
-          }}
+          onClick={handleVisit}
         >
           {cells}
         </Playground>
