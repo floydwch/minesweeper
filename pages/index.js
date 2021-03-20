@@ -17,7 +17,6 @@ const Page = styled.div`
 
 const Playground = styled.div`
   display: grid;
-  grid-template-columns: repeat(9, 40px);
 `
 
 const Cell = styled.div`
